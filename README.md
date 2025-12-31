@@ -1,36 +1,72 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 楽観的UI デモ - BuriKaigi 2026
 
-## Getting Started
+React 19でつくる「気持ちいいUI」— 楽観的更新のすすめ
 
-First, run the development server:
+## デモ内容
+
+### 1. 楽観的UI デモ (`/optimistic`)
+
+遅い処理を「速く見せる」テクニック
+
+- **Todoチェック**: Basic vs Optimistic の反応速度比較
+- **コメント追加**: 「送信中」表示の有無
+- **並び替え**: 即座に動くか待たされるか
+- **ロールバック確認**: 失敗時の自動復元
+
+### 2. Artificial Delay デモ (`/artificial-delay`)
+
+速い処理を「適切に見せる」テクニック
+
+- **AI分析風UI**: 処理時間のスライダー調整
+- **即時結果 vs 遅延結果**: 信頼感の変化を体験
+- **Labor Illusion効果**: ハーバード研究の再現
+
+## 技術スタック
+
+- Next.js 15 (App Router)
+- React 19
+- TypeScript
+- Tailwind CSS
+- Framer Motion
+
+## ローカル開発
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
+# 依存関係のインストール
+pnpm install
+
+# 開発サーバーの起動
 pnpm dev
-# or
-bun dev
+
+# ビルド
+pnpm build
+
+# 本番モードで起動
+pnpm start
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Vercelへのデプロイ
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### 方法1: Vercel CLIを使用
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+# Vercel CLIのインストール
+pnpm add -g vercel
 
-## Learn More
+# デプロイ
+vercel
+```
 
-To learn more about Next.js, take a look at the following resources:
+### 方法2: GitHubと連携
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+1. このリポジトリをGitHubにプッシュ
+2. [Vercel](https://vercel.com) にアクセス
+3. 「New Project」からリポジトリをインポート
+4. `demo` ディレクトリをルートに設定
+5. デプロイ
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## 参考リンク
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- [React useOptimistic](https://react.dev/reference/react/useOptimistic)
+- [True Lies Of Optimistic User Interfaces - Smashing Magazine](https://www.smashingmagazine.com/2016/11/true-lies-of-optimistic-user-interfaces/)
+- [The UX Secret That Will Ruin Apps For You - Fast Company](https://www.fastcompany.com/3061519/the-ux-secret-that-will-ruin-apps-for-you)
