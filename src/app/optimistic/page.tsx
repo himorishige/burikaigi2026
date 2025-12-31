@@ -35,7 +35,7 @@ export default function OptimisticPage() {
 
   const showError = (message: string) => {
     setErrorMessage(message);
-    setShouldFail(false); // エラー発生後、チェックボックスをOFFに戻す
+    setShouldFail(false);
     setTimeout(() => setErrorMessage(null), 3000);
   };
 
@@ -46,13 +46,13 @@ export default function OptimisticPage() {
   ];
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-6">
       <section>
         <h1 className="text-3xl font-bold text-slate-900 mb-2">
           楽観的UI デモ
         </h1>
         <p className="text-slate-600">
-          遅い処理を「速く見せる」テクニック。Basic（従来）とOptimistic（楽観的）を比較してください。
+          BasicとOptimisticを比較してください
         </p>
       </section>
 
@@ -83,12 +83,9 @@ export default function OptimisticPage() {
           <div className="flex items-center gap-2 text-amber-800">
             <AlertTriangle className="w-4 h-4" />
             <strong>次の操作を失敗させる</strong>
-            <span className="text-amber-600 font-normal">（ロールバックの確認用）</span>
+            <span className="text-amber-600 font-normal text-sm">（ロールバック確認用）</span>
           </div>
         </label>
-        <p className="mt-2 text-sm text-amber-600 ml-8">
-          ONにすると、次の操作がサーバーエラーになります。Optimistic側では自動でロールバックされます。
-        </p>
       </div>
 
       {/* タブ切替 */}
@@ -101,7 +98,7 @@ export default function OptimisticPage() {
               onClick={() => setActiveTab(tab.id)}
               className={`flex items-center gap-2 px-4 py-2 font-medium transition-colors ${
                 activeTab === tab.id
-                  ? "text-indigo-600 border-b-2 border-indigo-600"
+                  ? "text-triton-blue border-b-2 border-triton-blue"
                   : "text-slate-500 hover:text-slate-700"
               }`}
             >
@@ -149,17 +146,17 @@ export default function OptimisticPage() {
         </div>
 
         {/* Optimistic（楽観的） */}
-        <div className="bg-white rounded-2xl border-2 border-indigo-200 overflow-hidden">
-          <div className="bg-indigo-50 px-6 py-4 border-b border-indigo-200">
-            <h2 className="text-lg font-bold text-indigo-900 flex items-center gap-2">
+        <div className="bg-white rounded-2xl border-2 border-mohican-blue/50 overflow-hidden">
+          <div className="bg-mohican-blue/10 px-6 py-4 border-b border-mohican-blue/30">
+            <h2 className="text-lg font-bold text-triton-blue flex items-center gap-2">
               Optimistic（楽観的）
-              <span className="text-indigo-500">
+              <span className="text-mohican-blue">
                 <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                   <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z" />
                 </svg>
               </span>
             </h2>
-            <p className="text-sm text-indigo-600">
+            <p className="text-sm text-triton-blue/70">
               即座にUI更新
             </p>
           </div>
@@ -188,25 +185,16 @@ export default function OptimisticPage() {
         </div>
       </div>
 
-      {/* 確認ポイント */}
-      <section className="bg-slate-100 rounded-2xl p-6">
-        <div className="flex items-center gap-2 mb-4">
-          <Lightbulb className="w-5 h-5 text-slate-700" />
-          <h3 className="text-lg font-bold text-slate-900">確認ポイント</h3>
+      {/* 確認ポイント（簡潔版） */}
+      <section className="bg-slate-50 rounded-xl p-4 border border-slate-200">
+        <div className="flex items-center gap-2 mb-3">
+          <Lightbulb className="w-4 h-4 text-triton-blue" />
+          <h3 className="font-bold text-slate-900">確認ポイント</h3>
         </div>
-        <ul className="space-y-2 text-slate-600">
-          <li className="flex items-start gap-2">
-            <span className="text-indigo-600 font-medium">1.</span>
-            <span><strong>反応速度の違い</strong>: Basic は約0.8秒待たされ、Optimistic は即座に反応します</span>
-          </li>
-          <li className="flex items-start gap-2">
-            <span className="text-indigo-600 font-medium">2.</span>
-            <span><strong>ロールバック</strong>: 「次の操作を失敗させる」をONにして、Optimistic側で操作してみてください</span>
-          </li>
-          <li className="flex items-start gap-2">
-            <span className="text-indigo-600 font-medium">3.</span>
-            <span><strong>連続操作</strong>: Optimistic側では複数の操作を連続して行えます</span>
-          </li>
+        <ul className="text-sm text-slate-600 space-y-1.5">
+          <li>• Basicは約0.8秒待たされ、Optimisticは即座に反応</li>
+          <li>• 「失敗させる」をONにすると、Optimistic側は自動ロールバック</li>
+          <li>• Optimistic側は連続操作が可能</li>
         </ul>
       </section>
     </div>

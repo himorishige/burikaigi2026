@@ -3,20 +3,17 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
+  --triton-blue: #233f9a;
+  --mohican-blue: #00b5f0;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+  --color-triton-blue: var(--triton-blue);
+  --color-mohican-blue: var(--mohican-blue);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
 }
 
 body {

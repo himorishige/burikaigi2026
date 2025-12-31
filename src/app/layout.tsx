@@ -27,25 +27,25 @@ export default function RootLayout({
   return (
     <html lang="ja">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased bg-slate-50 min-h-screen`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased bg-white min-h-screen`}
       >
-        <header className="bg-slate-900 text-white py-4 px-6 shadow-lg">
+        <header className="bg-triton-blue text-white py-4 px-6 shadow-lg">
           <div className="max-w-6xl mx-auto flex items-center justify-between">
-            <Link href="/" className="flex items-center gap-2 text-xl font-bold hover:text-indigo-400 transition-colors">
+            <Link href="/" className="flex items-center gap-2 text-xl font-bold hover:text-mohican-blue transition-colors">
               <Target className="w-6 h-6" />
               <span>楽観的UI デモ</span>
             </Link>
             <nav className="flex gap-6">
               <Link 
                 href="/optimistic" 
-                className="flex items-center gap-1.5 hover:text-indigo-400 transition-colors"
+                className="flex items-center gap-1.5 hover:text-mohican-blue transition-colors"
               >
                 <Sparkles className="w-4 h-4" />
                 <span>楽観的UI</span>
               </Link>
               <Link 
                 href="/artificial-delay" 
-                className="flex items-center gap-1.5 hover:text-indigo-400 transition-colors"
+                className="flex items-center gap-1.5 hover:text-mohican-blue transition-colors"
               >
                 <Timer className="w-4 h-4" />
                 <span>Artificial Delay</span>
@@ -56,9 +56,9 @@ export default function RootLayout({
         <main className="max-w-6xl mx-auto py-8 px-6">
           {children}
         </main>
-        <footer className="bg-slate-100 border-t border-slate-200 py-4 px-6 mt-auto">
-          <div className="max-w-6xl mx-auto text-center text-slate-600 text-sm">
-            BuriKaigi 2026 - React 19でつくる「気持ちいいUI」
+        <footer className="border-t border-slate-200 py-4 px-6 mt-auto">
+          <div className="max-w-6xl mx-auto text-center text-slate-500 text-sm">
+            BuriKaigi 2026
           </div>
         </footer>
       </body>

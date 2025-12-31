@@ -24,7 +24,7 @@ export function DelaySlider({ value, onChange }: Props) {
           <Timer className="w-4 h-4" />
           意図的な遅延時間
         </label>
-        <span className="text-lg font-bold text-indigo-600">
+        <span className="text-lg font-bold text-triton-blue">
           {(value / 1000).toFixed(1)}秒
         </span>
       </div>
@@ -36,7 +36,7 @@ export function DelaySlider({ value, onChange }: Props) {
         step={500}
         value={value}
         onChange={(e) => onChange(Number(e.target.value))}
-        className="w-full h-2 bg-slate-200 rounded-full appearance-none cursor-pointer accent-indigo-600"
+        className="w-full h-2 bg-slate-200 rounded-full appearance-none cursor-pointer accent-triton-blue"
       />
 
       <div className="flex flex-wrap gap-2">
@@ -48,7 +48,7 @@ export function DelaySlider({ value, onChange }: Props) {
               onClick={() => onChange(preset.value)}
               className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full text-sm transition-colors ${
                 value === preset.value
-                  ? "bg-indigo-600 text-white"
+                  ? "bg-triton-blue text-white"
                   : "bg-slate-100 text-slate-600 hover:bg-slate-200"
               }`}
             >

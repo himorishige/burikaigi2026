@@ -25,7 +25,6 @@ export function TodoList({ initialTodos, isOptimistic, onError }: Props) {
 
   const handleToggle = async (todo: Todo) => {
     if (isOptimistic) {
-      // 楽観的UI
       startTransition(async () => {
         addOptimistic({ id: todo.id, done: !todo.done });
         try {
@@ -38,7 +37,6 @@ export function TodoList({ initialTodos, isOptimistic, onError }: Props) {
         }
       });
     } else {
-      // 従来のUI
       setSavingIds((prev) => new Set(prev).add(todo.id));
       try {
         await toggleTodo(todo.id, !todo.done);
@@ -72,13 +70,13 @@ export function TodoList({ initialTodos, isOptimistic, onError }: Props) {
               exit={{ opacity: 0, y: 10 }}
               onClick={() => !isSaving && handleToggle(todo)}
               className={`flex items-center gap-3 p-3 bg-white rounded-lg border transition-all cursor-pointer ${
-                todo.done ? "border-green-200 bg-green-50" : "border-slate-200 hover:border-indigo-300 hover:bg-slate-50"
+                todo.done ? "border-emerald-200 bg-emerald-50" : "border-slate-200 hover:border-mohican-blue hover:bg-slate-50"
               } ${isSaving ? "opacity-50 cursor-not-allowed" : ""}`}
             >
               <div
                 className={`w-6 h-6 rounded-full border-2 flex items-center justify-center transition-all ${
                   todo.done
-                    ? "bg-green-500 border-green-500 text-white"
+                    ? "bg-emerald-500 border-emerald-500 text-white"
                     : "border-slate-300"
                 }`}
               >

@@ -30,7 +30,6 @@ export function CommentList({ isOptimistic, onError }: Props) {
     setInputValue("");
 
     if (isOptimistic) {
-      // 楽観的UI
       const tempId = `temp-${Date.now()}`;
       const optimisticComment: Comment = {
         id: tempId,
@@ -49,14 +48,13 @@ export function CommentList({ isOptimistic, onError }: Props) {
         }
       });
     } else {
-      // 従来のUI
       setIsSaving(true);
       try {
         const saved = await postComment(text);
         setComments((prev) => [...prev, saved]);
       } catch {
         onError?.("コメントの投稿に失敗しました");
-        setInputValue(text); // 復元
+        setInputValue(text);
       } finally {
         setIsSaving(false);
       }
@@ -74,12 +72,12 @@ export function CommentList({ isOptimistic, onError }: Props) {
           onChange={(e) => setInputValue(e.target.value)}
           placeholder="コメントを入力..."
           disabled={isSaving}
-          className="flex-1 px-4 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 disabled:opacity-50"
+          className="flex-1 px-4 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-mohican-blue disabled:opacity-50"
         />
         <button
           type="submit"
           disabled={isSaving || !inputValue.trim()}
-          className="px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors flex items-center gap-2"
+          className="px-4 py-2 bg-triton-blue text-white rounded-lg hover:bg-triton-blue/90 disabled:opacity-50 disabled:cursor-not-allowed transition-colors flex items-center gap-2"
         >
           {isSaving ? (
             <>
@@ -110,14 +108,14 @@ export function CommentList({ isOptimistic, onError }: Props) {
                 exit={{ opacity: 0, x: 20 }}
                 className={`p-3 rounded-lg ${
                   comment.pending
-                    ? "bg-indigo-50 border border-indigo-200"
+                    ? "bg-mohican-blue/10 border border-mohican-blue/30"
                     : "bg-white border border-slate-200"
                 }`}
               >
                 <p className="text-slate-700">{comment.text}</p>
                 <div className="flex items-center gap-2 mt-1">
                   {comment.pending ? (
-                    <span className="flex items-center gap-1.5 text-xs text-indigo-500">
+                    <span className="flex items-center gap-1.5 text-xs text-triton-blue">
                       <Loader2 className="w-3 h-3 animate-spin" />
                       送信中
                     </span>

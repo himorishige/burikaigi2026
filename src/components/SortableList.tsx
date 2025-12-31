@@ -105,7 +105,7 @@ export function SortableList({ initialItems, isOptimistic, onError }: Props) {
                 isSaving ? "opacity-50" : ""
               }`}
             >
-              <span className="w-6 h-6 bg-slate-100 rounded-full flex items-center justify-center text-sm text-slate-500 font-medium">
+              <span className="w-6 h-6 bg-triton-blue/10 rounded-full flex items-center justify-center text-sm text-triton-blue font-medium">
                 {index + 1}
               </span>
               <span className="flex-1 text-slate-700">{item.text}</span>
@@ -113,7 +113,7 @@ export function SortableList({ initialItems, isOptimistic, onError }: Props) {
                 <button
                   onClick={() => moveUp(index)}
                   disabled={index === 0 || isSaving}
-                  className="p-1.5 text-slate-400 hover:text-slate-700 hover:bg-slate-100 rounded disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
+                  className="p-1.5 text-slate-400 hover:text-triton-blue hover:bg-triton-blue/10 rounded disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
                   title="上に移動"
                 >
                   <ChevronUp className="w-4 h-4" />
@@ -121,7 +121,7 @@ export function SortableList({ initialItems, isOptimistic, onError }: Props) {
                 <button
                   onClick={() => moveDown(index)}
                   disabled={index === displayItems.length - 1 || isSaving}
-                  className="p-1.5 text-slate-400 hover:text-slate-700 hover:bg-slate-100 rounded disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
+                  className="p-1.5 text-slate-400 hover:text-triton-blue hover:bg-triton-blue/10 rounded disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
                   title="下に移動"
                 >
                   <ChevronDown className="w-4 h-4" />

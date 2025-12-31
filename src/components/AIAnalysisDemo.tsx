@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useCallback } from "react";
+import { useState, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Play, RotateCcw, Shield, Search, BarChart3, Brain, Check, Loader2 } from "lucide-react";
 
@@ -22,10 +22,10 @@ const analysisPhases: Phase[] = [
 ];
 
 const analysisResults = [
-  { category: "ユーザー行動", score: 92, color: "bg-green-500" },
-  { category: "パフォーマンス", score: 87, color: "bg-blue-500" },
-  { category: "セキュリティ", score: 95, color: "bg-indigo-500" },
-  { category: "総合評価", score: 91, color: "bg-amber-500" },
+  { category: "ユーザー行動", score: 92, color: "bg-emerald-500" },
+  { category: "パフォーマンス", score: 87, color: "bg-mohican-blue" },
+  { category: "セキュリティ", score: 95, color: "bg-triton-blue" },
+  { category: "総合評価", score: 91, color: "bg-slate-600" },
 ];
 
 export function AIAnalysisDemo({ delayMs }: Props) {
@@ -46,7 +46,6 @@ export function AIAnalysisDemo({ delayMs }: Props) {
     let timerInterval: NodeJS.Timeout | null = null;
 
     if (delayMs > 0) {
-      // 遅延版：段階的に処理を進める
       timerInterval = setInterval(() => {
         setElapsed(Date.now() - startTime);
       }, 100);
@@ -56,7 +55,6 @@ export function AIAnalysisDemo({ delayMs }: Props) {
         setCurrentPhase(i);
         const phaseDuration = delayMs * analysisPhases[i].duration;
 
-        // このフェーズ内でプログレスを進める
         const steps = Math.ceil(phaseDuration / 50);
         for (let step = 0; step < steps; step++) {
           await new Promise((r) => setTimeout(r, phaseDuration / steps));
@@ -67,7 +65,6 @@ export function AIAnalysisDemo({ delayMs }: Props) {
 
       if (timerInterval) clearInterval(timerInterval);
     } else {
-      // 即時版：すぐに完了
       setProgress(100);
     }
 
@@ -91,7 +88,7 @@ export function AIAnalysisDemo({ delayMs }: Props) {
         <button
           onClick={runAnalysis}
           disabled={isAnalyzing}
-          className="flex-1 flex items-center justify-center gap-2 px-4 py-3 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+          className="flex-1 flex items-center justify-center gap-2 px-4 py-3 bg-triton-blue text-white rounded-lg hover:bg-triton-blue/90 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
         >
           {isAnalyzing ? (
             <>
@@ -120,7 +117,7 @@ export function AIAnalysisDemo({ delayMs }: Props) {
           {/* プログレスバー */}
           <div className="h-2 bg-slate-200 rounded-full overflow-hidden">
             <motion.div
-              className="h-full bg-indigo-600"
+              className="h-full bg-mohican-blue"
               initial={{ width: 0 }}
               animate={{ width: `${progress}%` }}
               transition={{ duration: 0.1 }}
@@ -138,15 +135,15 @@ export function AIAnalysisDemo({ delayMs }: Props) {
                     key={i}
                     className={`text-center p-2 rounded-lg transition-colors ${
                       isCompleted
-                        ? "bg-green-50 text-green-700"
+                        ? "bg-emerald-50 text-emerald-700"
                         : isActive
-                        ? "bg-indigo-50 text-indigo-700"
+                        ? "bg-mohican-blue/10 text-triton-blue"
                         : "bg-slate-50 text-slate-400"
                     }`}
                   >
                     <div className="flex justify-center mb-1">
                       {isCompleted ? (
-                        <Check className="w-4 h-4 text-green-500" />
+                        <Check className="w-4 h-4 text-emerald-500" />
                       ) : isActive ? (
                         <motion.span
                           animate={{ rotate: 360 }}
@@ -181,7 +178,7 @@ export function AIAnalysisDemo({ delayMs }: Props) {
             exit={{ opacity: 0, y: -20 }}
             className="space-y-4 mt-4"
           >
-            <div className="flex items-center justify-center gap-2 text-green-600 font-medium">
+            <div className="flex items-center justify-center gap-2 text-emerald-600 font-medium">
               <Check className="w-5 h-5" />
               分析完了！
             </div>
