@@ -6,6 +6,7 @@ import {
   BookOpen,
   ExternalLink,
   Quote,
+  MessageSquare,
 } from 'lucide-react';
 
 export default function Home() {
@@ -90,6 +91,43 @@ export default function Home() {
             <li className="flex items-center gap-2">
               <span className="w-1.5 h-1.5 bg-mohican-blue rounded-full shrink-0" />
               Labor Illusion効果の体験
+            </li>
+          </ul>
+          <div className="mt-4 sm:mt-6 text-triton-blue font-medium group-hover:translate-x-2 transition-transform inline-flex items-center gap-2 text-sm sm:text-base">
+            デモを見る
+            <ArrowRight className="w-4 h-4" />
+          </div>
+        </Link>
+
+        <Link
+          href="/streaming"
+          className="block p-5 sm:p-8 bg-white rounded-xl sm:rounded-2xl shadow-lg hover:shadow-xl transition-shadow border border-slate-200 group md:col-span-2"
+        >
+          <div className="w-10 h-10 sm:w-12 sm:h-12 bg-emerald-500/10 rounded-lg sm:rounded-xl flex items-center justify-center mb-3 sm:mb-4">
+            <MessageSquare className="w-5 h-5 sm:w-6 sm:h-6 text-emerald-500" />
+          </div>
+          <h2 className="text-xl sm:text-2xl font-bold text-slate-900 mb-2 sm:mb-3 group-hover:text-triton-blue transition-colors">
+            ストリーミング デモ
+          </h2>
+          <p className="text-sm sm:text-base text-slate-600 mb-3 sm:mb-4">
+            AIチャット風のストリーミングUIと楽観的UIの組み合わせ
+          </p>
+          <ul className="text-xs sm:text-sm text-slate-500 space-y-1.5 sm:space-y-2 md:grid md:grid-cols-2 md:gap-x-8 md:space-y-0">
+            <li className="flex items-center gap-2">
+              <span className="w-1.5 h-1.5 bg-emerald-500 rounded-full shrink-0" />
+              チャット形式のUI
+            </li>
+            <li className="flex items-center gap-2">
+              <span className="w-1.5 h-1.5 bg-emerald-500 rounded-full shrink-0" />
+              文字が流れるストリーミング表示
+            </li>
+            <li className="flex items-center gap-2">
+              <span className="w-1.5 h-1.5 bg-emerald-500 rounded-full shrink-0" />
+              楽観的UIとの組み合わせ効果
+            </li>
+            <li className="flex items-center gap-2">
+              <span className="w-1.5 h-1.5 bg-emerald-500 rounded-full shrink-0" />
+              ストリーミング速度の調整
             </li>
           </ul>
           <div className="mt-4 sm:mt-6 text-triton-blue font-medium group-hover:translate-x-2 transition-transform inline-flex items-center gap-2 text-sm sm:text-base">
