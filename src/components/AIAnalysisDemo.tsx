@@ -1,8 +1,17 @@
-"use client";
+'use client';
 
-import { useState, useCallback } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { Play, RotateCcw, Shield, Search, BarChart3, Brain, Check, Loader2 } from "lucide-react";
+import { useState, useCallback } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import {
+  Play,
+  RotateCcw,
+  Shield,
+  Search,
+  BarChart3,
+  Brain,
+  Check,
+  Loader2,
+} from 'lucide-react';
 
 type Props = {
   delayMs: number;
@@ -15,17 +24,29 @@ type Phase = {
 };
 
 const analysisPhases: Phase[] = [
-  { label: "データ収集中", icon: <Search className="w-4 h-4" />, duration: 0.2 },
-  { label: "パターン分析中", icon: <BarChart3 className="w-4 h-4" />, duration: 0.3 },
-  { label: "AIモデル処理中", icon: <Brain className="w-4 h-4" />, duration: 0.35 },
-  { label: "最終検証中", icon: <Shield className="w-4 h-4" />, duration: 0.15 },
+  {
+    label: 'データ収集中',
+    icon: <Search className="w-4 h-4" />,
+    duration: 0.2,
+  },
+  {
+    label: 'パターン分析中',
+    icon: <BarChart3 className="w-4 h-4" />,
+    duration: 0.3,
+  },
+  {
+    label: 'AIモデル処理中',
+    icon: <Brain className="w-4 h-4" />,
+    duration: 0.35,
+  },
+  { label: '最終検証中', icon: <Shield className="w-4 h-4" />, duration: 0.15 },
 ];
 
 const analysisResults = [
-  { category: "ユーザー行動", score: 92, color: "bg-emerald-500" },
-  { category: "パフォーマンス", score: 87, color: "bg-mohican-blue" },
-  { category: "セキュリティ", score: 95, color: "bg-triton-blue" },
-  { category: "総合評価", score: 91, color: "bg-slate-600" },
+  { category: 'ユーザー行動', score: 92, color: 'bg-emerald-500' },
+  { category: 'パフォーマンス', score: 87, color: 'bg-mohican-blue' },
+  { category: 'セキュリティ', score: 95, color: 'bg-triton-blue' },
+  { category: '総合評価', score: 91, color: 'bg-slate-600' },
 ];
 
 export function AIAnalysisDemo({ delayMs }: Props) {
@@ -88,24 +109,27 @@ export function AIAnalysisDemo({ delayMs }: Props) {
         <button
           onClick={runAnalysis}
           disabled={isAnalyzing}
-          className="flex-1 flex items-center justify-center gap-2 px-4 py-3 bg-triton-blue text-white rounded-lg hover:bg-triton-blue/90 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+          className="flex-1 flex items-center justify-center gap-2 px-3 sm:px-4 py-3 min-h-[44px] bg-triton-blue text-white rounded-lg hover:bg-triton-blue/90 disabled:opacity-50 disabled:cursor-not-allowed transition-colors text-sm sm:text-base"
         >
           {isAnalyzing ? (
             <>
               <Loader2 className="w-5 h-5 animate-spin" />
-              分析中...
+              <span className="hidden sm:inline">分析中...</span>
+              <span className="sm:hidden">分析中</span>
             </>
           ) : (
             <>
               <Play className="w-5 h-5" />
-              AI分析を開始
+              <span className="hidden sm:inline">AI分析を開始</span>
+              <span className="sm:hidden">分析開始</span>
             </>
           )}
         </button>
         <button
           onClick={reset}
           disabled={isAnalyzing}
-          className="px-4 py-3 border border-slate-300 text-slate-600 rounded-lg hover:bg-slate-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+          title="リセット"
+          className="px-3 sm:px-4 py-3 min-h-[44px] border border-slate-300 text-slate-600 rounded-lg hover:bg-slate-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
         >
           <RotateCcw className="w-5 h-5" />
         </button>
@@ -126,7 +150,7 @@ export function AIAnalysisDemo({ delayMs }: Props) {
 
           {/* フェーズ表示 */}
           {delayMs > 0 && (
-            <div className="grid grid-cols-4 gap-2">
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
               {analysisPhases.map((phase, i) => {
                 const isCompleted = i < currentPhase || showResult;
                 const isActive = i === currentPhase && !showResult;
@@ -135,10 +159,10 @@ export function AIAnalysisDemo({ delayMs }: Props) {
                     key={i}
                     className={`text-center p-2 rounded-lg transition-colors ${
                       isCompleted
-                        ? "bg-emerald-50 text-emerald-700"
+                        ? 'bg-emerald-50 text-emerald-700'
                         : isActive
-                        ? "bg-mohican-blue/10 text-triton-blue"
-                        : "bg-slate-50 text-slate-400"
+                          ? 'bg-mohican-blue/10 text-triton-blue'
+                          : 'bg-slate-50 text-slate-400'
                     }`}
                   >
                     <div className="flex justify-center mb-1">
@@ -147,7 +171,11 @@ export function AIAnalysisDemo({ delayMs }: Props) {
                       ) : isActive ? (
                         <motion.span
                           animate={{ rotate: 360 }}
-                          transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
+                          transition={{
+                            duration: 1,
+                            repeat: Infinity,
+                            ease: 'linear',
+                          }}
                         >
                           {phase.icon}
                         </motion.span>
@@ -155,7 +183,9 @@ export function AIAnalysisDemo({ delayMs }: Props) {
                         phase.icon
                       )}
                     </div>
-                    <span className="text-xs">{phase.label}</span>
+                    <span className="text-[10px] sm:text-xs leading-tight block">
+                      {phase.label}
+                    </span>
                   </div>
                 );
               })}
@@ -183,19 +213,19 @@ export function AIAnalysisDemo({ delayMs }: Props) {
               分析完了！
             </div>
 
-            <div className="space-y-3">
+            <div className="space-y-2 sm:space-y-3">
               {analysisResults.map((result, i) => (
                 <motion.div
                   key={result.category}
                   initial={{ opacity: 0, x: -20 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ delay: i * 0.1 }}
-                  className="flex items-center gap-3"
+                  className="flex items-center gap-2 sm:gap-3"
                 >
-                  <span className="text-sm text-slate-600 w-28">
+                  <span className="text-xs sm:text-sm text-slate-600 w-20 sm:w-28 shrink-0">
                     {result.category}
                   </span>
-                  <div className="flex-1 h-3 bg-slate-200 rounded-full overflow-hidden">
+                  <div className="flex-1 h-2 sm:h-3 bg-slate-200 rounded-full overflow-hidden">
                     <motion.div
                       className={`h-full ${result.color}`}
                       initial={{ width: 0 }}
@@ -203,7 +233,7 @@ export function AIAnalysisDemo({ delayMs }: Props) {
                       transition={{ duration: 0.5, delay: i * 0.1 }}
                     />
                   </div>
-                  <span className="text-sm font-medium text-slate-700 w-12 text-right">
+                  <span className="text-xs sm:text-sm font-medium text-slate-700 w-10 sm:w-12 text-right">
                     {result.score}%
                   </span>
                 </motion.div>

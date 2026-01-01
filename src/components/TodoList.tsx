@@ -1,10 +1,10 @@
-"use client";
+'use client';
 
-import { useState, useOptimistic, useTransition } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { Check, Loader2 } from "lucide-react";
-import { Todo, OptimisticToggleAction } from "@/lib/types";
-import { toggleTodo } from "@/lib/actions";
+import { useState, useOptimistic, useTransition } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { Check, Loader2 } from 'lucide-react';
+import { Todo, OptimisticToggleAction } from '@/lib/types';
+import { toggleTodo } from '@/lib/actions';
 
 type Props = {
   initialTodos: Todo[];
@@ -17,10 +17,11 @@ export function TodoList({ initialTodos, isOptimistic, onError }: Props) {
   const [, startTransition] = useTransition();
   const [savingIds, setSavingIds] = useState<Set<string>>(new Set());
 
-  const [optimisticTodos, addOptimistic] = useOptimistic<Todo[], OptimisticToggleAction>(
-    todos,
-    (current, action) =>
-      current.map((t) => (t.id === action.id ? { ...t, done: action.done } : t))
+  const [optimisticTodos, addOptimistic] = useOptimistic<
+    Todo[],
+    OptimisticToggleAction
+  >(todos, (current, action) =>
+    current.map((t) => (t.id === action.id ? { ...t, done: action.done } : t))
   );
 
   const handleToggle = async (todo: Todo) => {
@@ -33,7 +34,7 @@ export function TodoList({ initialTodos, isOptimistic, onError }: Props) {
             prev.map((t) => (t.id === todo.id ? { ...t, done: !todo.done } : t))
           );
         } catch {
-          onError?.("更新に失敗しました（自動で元に戻ります）");
+          onError?.('更新に失敗しました（自動で元に戻ります）');
         }
       });
     } else {
@@ -44,7 +45,7 @@ export function TodoList({ initialTodos, isOptimistic, onError }: Props) {
           prev.map((t) => (t.id === todo.id ? { ...t, done: !todo.done } : t))
         );
       } catch {
-        onError?.("更新に失敗しました");
+        onError?.('更新に失敗しました');
       } finally {
         setSavingIds((prev) => {
           const next = new Set(prev);
@@ -70,28 +71,27 @@ export function TodoList({ initialTodos, isOptimistic, onError }: Props) {
               exit={{ opacity: 0, y: 10 }}
               onClick={() => !isSaving && handleToggle(todo)}
               className={`flex items-center gap-3 p-3 bg-white rounded-lg border transition-all cursor-pointer ${
-                todo.done ? "border-emerald-200 bg-emerald-50" : "border-slate-200 hover:border-mohican-blue hover:bg-slate-50"
-              } ${isSaving ? "opacity-50 cursor-not-allowed" : ""}`}
+                todo.done
+                  ? 'border-emerald-200 bg-emerald-50'
+                  : 'border-slate-200 hover:border-mohican-blue hover:bg-slate-50'
+              } ${isSaving ? 'opacity-50 cursor-not-allowed' : ''}`}
             >
               <div
                 className={`w-6 h-6 rounded-full border-2 flex items-center justify-center transition-all ${
                   todo.done
-                    ? "bg-emerald-500 border-emerald-500 text-white"
-                    : "border-slate-300"
+                    ? 'bg-emerald-500 border-emerald-500 text-white'
+                    : 'border-slate-300'
                 }`}
               >
                 {todo.done && (
-                  <motion.span
-                    initial={{ scale: 0 }}
-                    animate={{ scale: 1 }}
-                  >
+                  <motion.span initial={{ scale: 0 }} animate={{ scale: 1 }}>
                     <Check className="w-3.5 h-3.5" />
                   </motion.span>
                 )}
               </div>
               <span
                 className={`flex-1 ${
-                  todo.done ? "text-slate-400 line-through" : "text-slate-700"
+                  todo.done ? 'text-slate-400 line-through' : 'text-slate-700'
                 }`}
               >
                 {todo.text}

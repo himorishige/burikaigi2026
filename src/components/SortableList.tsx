@@ -1,10 +1,10 @@
-"use client";
+'use client';
 
-import { useState, useOptimistic, useTransition } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { ChevronUp, ChevronDown, Loader2 } from "lucide-react";
-import { SortableItem, OptimisticReorderAction } from "@/lib/types";
-import { persistOrder } from "@/lib/actions";
+import { useState, useOptimistic, useTransition } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { ChevronUp, ChevronDown, Loader2 } from 'lucide-react';
+import { SortableItem, OptimisticReorderAction } from '@/lib/types';
+import { persistOrder } from '@/lib/actions';
 
 type Props = {
   initialItems: SortableItem[];
@@ -12,7 +12,11 @@ type Props = {
   onError?: (message: string) => void;
 };
 
-function reorder(items: SortableItem[], fromIndex: number, toIndex: number): SortableItem[] {
+function reorder(
+  items: SortableItem[],
+  fromIndex: number,
+  toIndex: number
+): SortableItem[] {
   const result = [...items];
   const [removed] = result.splice(fromIndex, 1);
   result.splice(toIndex, 0, removed);
@@ -24,9 +28,11 @@ export function SortableList({ initialItems, isOptimistic, onError }: Props) {
   const [, startTransition] = useTransition();
   const [savingIndex, setSavingIndex] = useState<number | null>(null);
 
-  const [optimisticItems, addOptimistic] = useOptimistic<SortableItem[], OptimisticReorderAction>(
-    items,
-    (current, action) => reorder(current, action.fromIndex, action.toIndex)
+  const [optimisticItems, addOptimistic] = useOptimistic<
+    SortableItem[],
+    OptimisticReorderAction
+  >(items, (current, action) =>
+    reorder(current, action.fromIndex, action.toIndex)
   );
 
   const moveUp = async (index: number) => {
@@ -41,7 +47,7 @@ export function SortableList({ initialItems, isOptimistic, onError }: Props) {
           const saved = await persistOrder(next);
           setItems(saved);
         } catch {
-          onError?.("並び替えに失敗しました（自動で元に戻ります）");
+          onError?.('並び替えに失敗しました（自動で元に戻ります）');
         }
       });
     } else {
@@ -51,7 +57,7 @@ export function SortableList({ initialItems, isOptimistic, onError }: Props) {
         const saved = await persistOrder(next);
         setItems(saved);
       } catch {
-        onError?.("並び替えに失敗しました");
+        onError?.('並び替えに失敗しました');
       } finally {
         setSavingIndex(null);
       }
@@ -70,7 +76,7 @@ export function SortableList({ initialItems, isOptimistic, onError }: Props) {
           const saved = await persistOrder(next);
           setItems(saved);
         } catch {
-          onError?.("並び替えに失敗しました（自動で元に戻ります）");
+          onError?.('並び替えに失敗しました（自動で元に戻ります）');
         }
       });
     } else {
@@ -80,7 +86,7 @@ export function SortableList({ initialItems, isOptimistic, onError }: Props) {
         const saved = await persistOrder(next);
         setItems(saved);
       } catch {
-        onError?.("並び替えに失敗しました");
+        onError?.('並び替えに失敗しました');
       } finally {
         setSavingIndex(null);
       }
@@ -101,30 +107,32 @@ export function SortableList({ initialItems, isOptimistic, onError }: Props) {
               initial={{ opacity: 0, y: -10 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: 10 }}
-              className={`flex items-center gap-3 p-3 bg-white rounded-lg border border-slate-200 ${
-                isSaving ? "opacity-50" : ""
+              className={`flex items-center gap-2 sm:gap-3 p-3 bg-white rounded-lg border border-slate-200 ${
+                isSaving ? 'opacity-50' : ''
               }`}
             >
-              <span className="w-6 h-6 bg-triton-blue/10 rounded-full flex items-center justify-center text-sm text-triton-blue font-medium">
+              <span className="w-6 h-6 bg-triton-blue/10 rounded-full flex items-center justify-center text-xs sm:text-sm text-triton-blue font-medium shrink-0">
                 {index + 1}
               </span>
-              <span className="flex-1 text-slate-700">{item.text}</span>
+              <span className="flex-1 text-sm sm:text-base text-slate-700">
+                {item.text}
+              </span>
               <div className="flex gap-1">
                 <button
                   onClick={() => moveUp(index)}
                   disabled={index === 0 || isSaving}
-                  className="p-1.5 text-slate-400 hover:text-triton-blue hover:bg-triton-blue/10 rounded disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
+                  className="p-2 sm:p-1.5 text-slate-400 hover:text-triton-blue hover:bg-triton-blue/10 rounded disabled:opacity-30 disabled:cursor-not-allowed transition-colors min-w-[36px] sm:min-w-0 min-h-[36px] sm:min-h-0 flex items-center justify-center"
                   title="上に移動"
                 >
-                  <ChevronUp className="w-4 h-4" />
+                  <ChevronUp className="w-5 h-5 sm:w-4 sm:h-4" />
                 </button>
                 <button
                   onClick={() => moveDown(index)}
                   disabled={index === displayItems.length - 1 || isSaving}
-                  className="p-1.5 text-slate-400 hover:text-triton-blue hover:bg-triton-blue/10 rounded disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
+                  className="p-2 sm:p-1.5 text-slate-400 hover:text-triton-blue hover:bg-triton-blue/10 rounded disabled:opacity-30 disabled:cursor-not-allowed transition-colors min-w-[36px] sm:min-w-0 min-h-[36px] sm:min-h-0 flex items-center justify-center"
                   title="下に移動"
                 >
-                  <ChevronDown className="w-4 h-4" />
+                  <ChevronDown className="w-5 h-5 sm:w-4 sm:h-4" />
                 </button>
               </div>
               {isSaving && (

@@ -8,6 +8,7 @@ export type Comment = {
   id: string;
   text: string;
   pending?: boolean;
+  failed?: boolean;
   createdAt: Date;
 };
 
@@ -32,4 +33,3 @@ export type AnalysisResult = {
   summary: string;
   details: string[];
 };
-
