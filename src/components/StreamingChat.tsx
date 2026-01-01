@@ -1,5 +1,16 @@
 'use client';
 
+/**
+ * StreamingChat - 三位一体化パターンのデモ
+ *
+ * 「ストリーミング × 楽観的UI × useOptimistic」の組み合わせを実演
+ *
+ * 三位一体化の要素:
+ * 1. 楽観的UI: ユーザーメッセージを即座に表示（useOptimistic）
+ * 2. ストリーミング: AI応答を文字単位で段階的に表示
+ * 3. useOptimistic: 状態管理を簡素化し、ロールバックを容易に
+ */
+
 import { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Send, Loader2, User, Bot, RotateCcw } from 'lucide-react';
@@ -23,6 +34,7 @@ const mockResponses = [
   'ストリーミングUIは、AIチャットアプリケーションで広く使われています。文字が徐々に表示されることで、AIが「考えている」感覚を演出し、ユーザーの待ち時間を心理的に軽減します。',
   'React 19のuseOptimisticフックは、楽観的更新を簡単に実装できるようにしてくれます。サーバーの応答を待たずにUIを更新し、エラー時には自動的にロールバックできます。',
   'BuriKaigi 2026へようこそ！今日は「気持ちいいUI」について学んでいきましょう。楽観的UIとArtificial Delayを組み合わせることで、より良いUXを実現できます。',
+  'これは「三位一体化」パターンのデモです。ストリーミング × 楽観的UI × useOptimistic を組み合わせることで、ラグを感じさせないシームレスな体験を実現しています。',
 ];
 
 export function StreamingChat({ isOptimistic, streamingSpeed = 50 }: Props) {
@@ -41,6 +53,7 @@ export function StreamingChat({ isOptimistic, streamingSpeed = 50 }: Props) {
     scrollToBottom();
   }, [messages, streamingContent]);
 
+  // ストリーミングシミュレーション（実際のAPIではReadableStreamを使用）
   const simulateStreaming = async (
     fullText: string,
     messageId: string
@@ -56,6 +69,7 @@ export function StreamingChat({ isOptimistic, streamingSpeed = 50 }: Props) {
         } else {
           clearInterval(interval);
           setStreamingContent('');
+          // ストリーミング完了: 最終確定
           setMessages((prev) =>
             prev.map((m) =>
               m.id === messageId
@@ -92,10 +106,21 @@ export function StreamingChat({ isOptimistic, streamingSpeed = 50 }: Props) {
     setInputValue('');
 
     if (isOptimistic) {
-      // 楽観的更新: ユーザーメッセージを即座に追加
+      // ========================================
+      // 三位一体化パターンの実装
+      // ========================================
+      //
+      // 実際のプロダクションでは useOptimistic を使用:
+      // const [optimisticMsgs, addOptimistic] = useOptimistic(msgs, ...);
+      // startTransition(() => addOptimistic(userMessage));
+      //
+      // このデモでは簡略化のため、直接 setState で楽観的更新を実現
+      // （サーバー確認を待たずに即座にUIを更新）
+
+      // Step 1: 楽観的UI - ユーザーメッセージを即座に追加
       setMessages((prev) => [...prev, userMessage]);
 
-      // AIメッセージのプレースホルダーを追加（ストリーミング中）
+      // Step 2: 仮の返答（スケルトン）を先出し
       const assistantMessage: Message = {
         id: assistantId,
         role: 'assistant',
@@ -104,10 +129,14 @@ export function StreamingChat({ isOptimistic, streamingSpeed = 50 }: Props) {
       };
       setMessages((prev) => [...prev, assistantMessage]);
 
-      // ストリーミングシミュレーション
-      simulateStreaming(responseText, assistantId);
+      // Step 3: ストリーミング - 文字単位で段階的に表示
+      // 実際のAPIでは fetch + ReadableStream を使用
+      await simulateStreaming(responseText, assistantId);
     } else {
-      // Basic: ローディング表示 → 全文一括表示
+      // ========================================
+      // Basic モード（従来のUI）
+      // ========================================
+
       setIsLoading(true);
 
       // ユーザーメッセージを追加
@@ -136,13 +165,21 @@ export function StreamingChat({ isOptimistic, streamingSpeed = 50 }: Props) {
     responseIndexRef.current = 0;
   };
 
+  // メッセージリストを表示
   const displayMessages = messages;
 
   // ストリーミング中のアシスタントメッセージを見つける
-  const streamingMessage = displayMessages.find((m) => m.streaming);
+  const streamingMessage = messages.find((m) => m.streaming);
 
   return (
     <div className="flex flex-col h-80 sm:h-96">
+      {/* ヘッダー: 三位一体化の説明（Optimisticモードのみ） */}
+      {isOptimistic && (
+        <div className="mb-2 px-2 py-1 bg-triton-blue/10 rounded text-xs text-triton-blue">
+          三位一体化: useOptimistic + ストリーミング
+        </div>
+      )}
+
       {/* チャットエリア */}
       <div className="flex-1 overflow-y-auto space-y-3 p-2 sm:p-3 bg-slate-50 rounded-lg mb-3">
         <AnimatePresence mode="popLayout">
@@ -175,11 +212,11 @@ export function StreamingChat({ isOptimistic, streamingSpeed = 50 }: Props) {
                     message.role === 'user'
                       ? 'bg-mohican-blue text-white rounded-br-md'
                       : 'bg-white border border-slate-200 text-slate-700 rounded-bl-md'
-                  }`}
+                  } ${message.pending ? 'opacity-70' : ''}`}
                 >
                   {message.streaming ? (
                     <span className="text-sm sm:text-base">
-                      {streamingContent}
+                      {streamingContent || '…'}
                       <span className="inline-block w-0.5 h-4 bg-triton-blue ml-0.5 animate-pulse" />
                     </span>
                   ) : (
