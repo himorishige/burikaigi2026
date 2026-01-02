@@ -80,29 +80,3 @@ pnpm build
 # 本番モードで起動
 pnpm start
 ```
-
-## Vercelへのデプロイ
-
-### 方法1: Vercel CLIを使用
-
-```bash
-# Vercel CLIのインストール
-pnpm add -g vercel
-
-# デプロイ
-vercel
-```
-
-### 方法2: GitHubと連携
-
-1. このリポジトリをGitHubにプッシュ
-2. [Vercel](https://vercel.com) にアクセス
-3. 「New Project」からリポジトリをインポート
-4. `demo` ディレクトリをルートに設定
-5. デプロイ
-
-## 参考リンク
-
-- [React useOptimistic](https://react.dev/reference/react/useOptimistic)
-- [True Lies Of Optimistic User Interfaces - Smashing Magazine](https://www.smashingmagazine.com/2016/11/true-lies-of-optimistic-user-interfaces/)
-- [The UX Secret That Will Ruin Apps For You - Fast Company](https://www.fastcompany.com/3061519/the-ux-secret-that-will-ruin-apps-for-you)
